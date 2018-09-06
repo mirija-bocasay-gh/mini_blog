@@ -49,3 +49,8 @@ services:
         public: true
         autowire: true
 
+    AppBundle\Service\DataChecker\ArticleChecker:
+        class: AppBundle\Service\DataChecker\ArticleChecker
+        public: true
+        autowire: true
+

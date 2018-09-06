@@ -26,4 +26,19 @@ class ArticleManager extends BaseManager
 
         return;
     }
+
+    /**
+     * Update existing article
+     *
+     * @param Article $article
+     * @param bool $flush
+     */
+    public function update(Article $article, $flush = true)
+    {
+        if (true === $flush) {
+            $this->flush();
+        }
+
+        return;
+    }
 }

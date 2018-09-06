@@ -32,4 +32,23 @@ class ArticleFormGenerator extends FormGenerator
 
         return $form;
     }
+
+    /**
+     * Generate form for edit action
+     *
+     * @param Article $article
+     * @param $formName
+     *
+     * @return FormInterface
+     */
+    public function generateForEdit(Article $article, $formName)
+    {
+        $form = $this->formFactory->createNamed(
+            $formName,
+            self::DEFAULT_FORM_CLASS,
+            $article
+        );
+
+        return $form;
+    }
 }

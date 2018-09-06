@@ -43,8 +43,8 @@ class ArticleController extends Controller
      */
     public function detailAction($id)
     {
-        $em = $this->getDoctrine()->getManager();
-        $article = $em->getRepository('AppBundle\Entity\Article')->findOneById($id);
+        $articleChecker = $this->get('AppBundle\Service\DataChecker\ArticleChecker');
+        $article = $articleChecker->checkIfExists($id);
         if (is_null($article)) {
             throw new NotFoundHttpException();
         }
@@ -77,6 +77,40 @@ class ArticleController extends Controller
         return $this->render('article/manipulate.html.twig', array(
             'create_article_form' => $form->createView(),
             'action_type' => ManipulationActionType::ACTION_ADD,
+        ));
+    }
+
+    /**
+     * Edit article
+     *
+     * @Route("/edition/{id}", name="article_edit", requirements={"id": "\d+"})
+     *
+     * @param Request $request
+     * @param int $id
+     *
+     * @return Response
+     */
+    public function editAction(Request $request, $id)
+    {
+        $articleChecker = $this->get('AppBundle\Service\DataChecker\ArticleChecker');
+        $article = $articleChecker->checkIfExists($id);
+        if (is_null($article)) {
+            throw new NotFoundHttpException();
+        }
+
+        $formGenerator = $this->get('AppBundle\Service\FormGenerator\ArticleFormGenerator');
+        $form = $formGenerator->generateForEdit($article, 'edit_article_form');
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $articleManager = $this->get('AppBundle\Manager\ArticleManager');
+            $articleManager->update($form->getData());
+
+            return $this->redirectToRoute('article_list');
+        }
+
+        return $this->render('article/manipulate.html.twig', array(
+            'create_article_form' => $form->createView(),
+            'action_type' => ManipulationActionType::ACTION_EDIT,
         ));
     }
 }

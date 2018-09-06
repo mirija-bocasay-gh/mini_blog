@@ -38,10 +38,11 @@ class ArticleController extends Controller
      *
      * @Route("/detail/{id}", name="article_detail", requirements={"id": "\d+"})
      *
+     * @param Request $request
      * @param int $id
      * @return Response
      */
-    public function detailAction($id)
+    public function detailAction(Request $request, $id)
     {
         $articleChecker = $this->get('AppBundle\Service\DataChecker\ArticleChecker');
         $article = $articleChecker->checkIfExists($id);
@@ -49,8 +50,20 @@ class ArticleController extends Controller
             throw new NotFoundHttpException();
         }
 
+        $commentFormGenerator = $this->get('AppBundle\Service\FormGenerator\CommentFormGenerator');
+        $form = $commentFormGenerator->generateForCreate('create_comment_form');
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $this->denyAccessUnlessGranted('IS_AUTHENTICATED_REMEMBERED');
+            $commentManager = $this->get('AppBundle\Manager\CommentManager');
+            $commentManager->create($form->getData(), $article);
+
+            return $this->redirectToRoute('article_detail', array('id' => $id));
+        }
+
         return $this->render('article/detail.html.twig', array(
             'article' => $article,
+            'create_comment_form' => $form->createView(),
         ));
     }
 

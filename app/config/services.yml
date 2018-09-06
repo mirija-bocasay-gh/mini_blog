@@ -40,9 +40,9 @@ services:
         autowire: true
 
     AppBundle\Manager\BaseManager:
-            class: AppBundle\Manager\BaseManager
-            public: true
-            autowire: true
+        class: AppBundle\Manager\BaseManager
+        public: true
+        autowire: true
 
     AppBundle\Manager\ArticleManager:
         class: AppBundle\Manager\ArticleManager
@@ -51,6 +51,16 @@ services:
 
     AppBundle\Service\DataChecker\ArticleChecker:
         class: AppBundle\Service\DataChecker\ArticleChecker
+        public: true
+        autowire: true
+
+    AppBundle\Service\FormGenerator\CommentFormGenerator:
+        class: AppBundle\Service\FormGenerator\CommentFormGenerator
+        public: true
+        autowire: true
+
+    AppBundle\Manager\CommentManager:
+        class: AppBundle\Manager\CommentManager
         public: true
         autowire: true
 

@@ -9,5 +9,32 @@
             {{ article.content }}
         </p>
     </div>
+
+    <h4>Commentaires</h4>
+    {% set comment_list = article.comments %}
+    {% if comment_list is not empty %}
+    <div>
+        {% for comment in comment_list %}
+        <div>
+            <p>{{ comment.publishedAt|date('d/m/Y h:i') }}</p>
+            <p>{{ comment.content }}</p>
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+        <p>Aucun commentaire disponible.</p>
+    {% endif %}
+
+    {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+        {% if create_comment_form is defined %}
+        <h4>Ajouter un commentaire</h4>
+            {{ form_start(create_comment_form, {'attr': {'novalidate': 'novalidate'}}) }}
+                {{ form_widget(create_comment_form.content) }}
+                {{ form_errors(create_comment_form.content) }}
+                <button>Ajouter</button>
+            {{ form_end(create_comment_form) }}
+        {% endif %}
+    {% endif %}
+
     {% endblock %}
 {% endif %}

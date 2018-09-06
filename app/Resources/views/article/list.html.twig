@@ -18,7 +18,7 @@
                      <td>
                          <a href="{{ path('article_detail', {'id': article.id}) }}">voir</a>
                          <a href="{{ path('article_edit', {'id': article.id}) }}">éditer</a>
-                         <a href="#">supprimer</a>
+                         <a href="{{ path('article_delete', {'id': article.id}) }}">supprimer</a>
                      </td>
                  </tr>
                  {% endfor %}

@@ -113,4 +113,27 @@ class ArticleController extends Controller
             'action_type' => ManipulationActionType::ACTION_EDIT,
         ));
     }
+
+    /**
+     * Delete article
+     *
+     * @Route("/suppression/{id}", name="article_delete", requirements={"id": "\d+"})
+     *
+     * @param $id
+     *
+     * @return Response
+     */
+    public function deleteAction($id)
+    {
+        $articleChecker = $this->get('AppBundle\Service\DataChecker\ArticleChecker');
+        $article = $articleChecker->checkIfExists($id);
+        if (is_null($article)) {
+            throw new NotFoundHttpException();
+        }
+
+        $articleManager = $this->get('AppBundle\Manager\ArticleManager');
+        $articleManager->delete($article);
+
+        return $this->redirectToRoute('article_list');
+    }
 }

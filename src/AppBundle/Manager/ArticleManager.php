@@ -41,4 +41,21 @@ class ArticleManager extends BaseManager
 
         return;
     }
+
+    /**
+     * Delete existing article
+     *
+     * @param Article $article
+     * @param bool $flush
+     */
+    public function delete(Article $article, $flush = true)
+    {
+        $this->em->remove($article);
+
+        if (true === $flush) {
+            $this->flush();
+        }
+
+        return;
+    }
 }

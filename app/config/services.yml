@@ -33,3 +33,19 @@ services:
     # AppBundle\Service\ExampleService:
     #     arguments:
     #         $someArgument: 'some_value'
+
+    AppBundle\Service\FormGenerator\ArticleFormGenerator:
+        class: AppBundle\Service\FormGenerator\ArticleFormGenerator
+        public: true
+        autowire: true
+
+    AppBundle\Manager\BaseManager:
+            class: AppBundle\Manager\BaseManager
+            public: true
+            autowire: true
+
+    AppBundle\Manager\ArticleManager:
+        class: AppBundle\Manager\ArticleManager
+        public: true
+        autowire: true
+

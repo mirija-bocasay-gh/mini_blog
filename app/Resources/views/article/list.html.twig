@@ -1,0 +1,34 @@
+{% extends "base.html.twig" %}
+{% block title %}Liste des articles{% endblock %}
+{% block body %}
+    <div>
+        <h1>Liste des articles</h1>
+        {% if article_list is defined and article_list is not empty %}
+        <table>
+            <thead>
+                <tr>
+                    <th>Titre</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                 {% for article in article_list %}
+                 <tr>
+                     <td>{{ article.title }}</td>
+                     <td>
+                         <a href="#">voir</a>
+                         <a href="#">éditer</a>
+                         <a href="#">supprimer</a>
+                     </td>
+                 </tr>
+                 {% endfor %}
+            </tbody>
+        </table>
+        {% else %}
+            <p>Aucun article disponible.</p>
+        {% endif %}
+        <div>
+            <a href="{{ path('article_add') }}">Ajouter</a>
+        </div>
+    </div>
+{% endblock %}

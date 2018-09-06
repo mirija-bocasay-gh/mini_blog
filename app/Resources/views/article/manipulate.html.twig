@@ -1,0 +1,32 @@
+{% extends "base.html.twig" %}
+
+{% set pageTitle = 'X' %}
+{% if action_type is defined %}
+    {% if constant('AppBundle\\Constant\\ManipulationActionType::ACTION_ADD') == action_type %}
+        {% set pageTitle = 'Ajout article' %}
+    {% elseif constant('AppBundle\\Constant\\ManipulationActionType::ACTION_EDIT') == action_type %}
+        {% set pageTitle = 'Edition article' %}
+    {% endif %}
+{% endif %}
+
+{% block title %}{{ pageTitle }}{% endblock %}
+{% block body %}
+<div>
+    <h1>{{ pageTitle }}</h1>
+    {% if create_article_form is defined %}
+        {{ form_start(create_article_form, {'attr': {'novalidate': 'novalidate'}}) }}
+        <div>
+            {{ form_label(create_article_form.title, 'Titre') }}
+            {{ form_widget(create_article_form.title) }}
+            {{ form_errors(create_article_form.title) }}
+        </div>
+        <div>
+            {{ form_label(create_article_form.content, 'Contenu') }}
+            {{ form_widget(create_article_form.content) }}
+            {{ form_errors(create_article_form.content) }}
+        </div>
+        <button>Enregistrer</button>
+        {{ form_end(create_article_form) }}
+    {% endif %}
+</div>
+{% endblock %}

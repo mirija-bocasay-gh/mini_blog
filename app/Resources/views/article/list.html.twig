@@ -16,7 +16,7 @@
                  <tr>
                      <td>{{ article.title }}</td>
                      <td>
-                         <a href="#">voir</a>
+                         <a href="{{ path('article_detail', {'id': article.id}) }}">voir</a>
                          <a href="#">éditer</a>
                          <a href="#">supprimer</a>
                      </td>

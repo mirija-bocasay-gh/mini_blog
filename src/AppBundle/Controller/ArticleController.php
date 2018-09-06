@@ -1,6 +1,7 @@
 <?php
 namespace AppBundle\Controller;
 
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
@@ -42,7 +43,15 @@ class ArticleController extends Controller
      */
     public function detailAction($id)
     {
+        $em = $this->getDoctrine()->getManager();
+        $article = $em->getRepository('AppBundle\Entity\Article')->findOneById($id);
+        if (is_null($article)) {
+            throw new NotFoundHttpException();
+        }
 
+        return $this->render('article/detail.html.twig', array(
+            'article' => $article,
+        ));
     }
 
     /**

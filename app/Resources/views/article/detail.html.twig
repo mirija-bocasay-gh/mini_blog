@@ -1,0 +1,13 @@
+{% extends "base.html.twig" %}
+
+{% if article is defined %}
+    {% block title %}Article {{ article.title is not empty ? ' | '~article.title : '' }}{% endblock %}
+    {% block body %}
+    <div>
+        <h1>{{ article.title }}</h1>
+        <p>
+            {{ article.content }}
+        </p>
+    </div>
+    {% endblock %}
+{% endif %}
